@@ -83,11 +83,11 @@ Salon.init({
         allowNull: false
     },
     longitude: {
-        type: DataTypes.DECIMAL(10, 7),
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     latitude: {
-        type: DataTypes.DECIMAL(10, 7),
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     ownerId: {

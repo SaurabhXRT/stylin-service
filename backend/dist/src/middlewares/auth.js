@@ -144,7 +144,6 @@ function _ts_generator(thisArg, body) {
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv-flow';
 import { UserLoginSession } from '../models/LoginSession/User.Loginsession.js';
-import { OwnerLoginSession } from '../models/LoginSession/Owner.loginsession.js';
 import { StaffLoginSession } from '../models/LoginSession/Staff.loginsession.js';
 dotenv.config();
 export var AuthMiddleware = /*#__PURE__*/ function() {
@@ -165,7 +164,7 @@ export var AuthMiddleware = /*#__PURE__*/ function() {
                                 if (!token) {
                                     return [
                                         2,
-                                        res.status(401).send("Unauthorized")
+                                        "Unauthorized"
                                     ];
                                 }
                                 _state.label = 1;
@@ -185,7 +184,7 @@ export var AuthMiddleware = /*#__PURE__*/ function() {
                                 if (!isValid) {
                                     return [
                                         2,
-                                        res.status(401).send("Invalid token")
+                                        "Invalid token"
                                     ];
                                 }
                                 return [
@@ -196,10 +195,10 @@ export var AuthMiddleware = /*#__PURE__*/ function() {
                                 _ref = _state.sent(), userId = _ref.userId, ownerId = _ref.ownerId, staffId = _ref.staffId;
                                 if (userId) {
                                     req.userId = userId;
-                                } else if (ownerId) {
-                                    req.ownerId = ownerId;
                                 } else if (staffId) {
                                     req.staffId = staffId;
+                                } else if (ownerId) {
+                                    req.ownerId = ownerId;
                                 } else {
                                     throw new Error("Unauthorized");
                                 }
@@ -301,9 +300,9 @@ export var AuthMiddleware = /*#__PURE__*/ function() {
                                 ];
                                 return [
                                     4,
-                                    OwnerLoginSession.findOne({
+                                    UserLoginSession.findOne({
                                         where: {
-                                            ownerId: decoded.ownerId,
+                                            userId: decoded.ownerId,
                                             token: token
                                         }
                                     })

@@ -141,7 +141,7 @@ function _ts_generator(thisArg, body) {
         };
     }
 }
-import { Staff } from "../../models/Staff/Staff";
+import { Staff } from "../../models/Staff/Staff.js";
 export var StaffMiddleware = /*#__PURE__*/ function() {
     "use strict";
     function StaffMiddleware() {

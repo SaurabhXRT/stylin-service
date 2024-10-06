@@ -13,6 +13,19 @@ function _class_call_check(instance, Constructor) {
         throw new TypeError("Cannot call a class as a function");
     }
 }
+function _define_property(obj, key, value) {
+    if (key in obj) {
+        Object.defineProperty(obj, key, {
+            value: value,
+            enumerable: true,
+            configurable: true,
+            writable: true
+        });
+    } else {
+        obj[key] = value;
+    }
+    return obj;
+}
 function _get_prototype_of(o) {
     _get_prototype_of = Object.setPrototypeOf ? Object.getPrototypeOf : function getPrototypeOf(o) {
         return o.__proto__ || Object.getPrototypeOf(o);
@@ -64,7 +77,9 @@ var User = /*#__PURE__*/ function(Model) {
     _inherits(User, Model);
     function User() {
         _class_call_check(this, User);
-        return _call_super(this, User, arguments);
+        var _this;
+        _this = _call_super(this, User, arguments), _define_property(_this, "id", void 0), _define_property(_this, "name", void 0), _define_property(_this, "username", void 0), _define_property(_this, "email", void 0), _define_property(_this, "password", void 0), _define_property(_this, "role", void 0);
+        return _this;
     }
     return User;
 }(Model);
@@ -93,7 +108,8 @@ User.init({
     profileImage: {
         type: DataTypes.STRING,
         allowNull: true
-    }
+    },
+    role: DataTypes.ENUM("User", "Owner")
 }, {
     sequelize: centralDatabase.getInstance(),
     modelName: "User",

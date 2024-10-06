@@ -1,0 +1,21 @@
+import logger from "../../logger/logger.js";
+import { UserService } from "../../services/UserService.js";
+const service = new UserService();
+export const getCurrentUserController = async(__:any,_:any,context:any) => {
+    try {
+        let user = null;
+        if (context.userId) {
+          user = await service.getUserById(context.userId);
+        } else if (context.ownerId) {
+          user = await service.getUserById(context.ownerId);
+        } else if (context.staffId) {
+          user = await service.getStaffById(context.staffId);
+        }
+        if(!user){
+            throw new Error("no user found");
+        }
+    } catch(error){
+        throw new Error("error fetching userprofile");
+    }
+   
+}

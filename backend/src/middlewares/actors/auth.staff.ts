@@ -1,4 +1,4 @@
-import { Staff } from "../../models/Staff/Staff";
+import { Staff } from "../../models/Staff/Staff.js";
 
 export class StaffMiddleware {
     static async isStaff(req: any) {

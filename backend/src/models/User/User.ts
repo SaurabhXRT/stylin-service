@@ -1,7 +1,14 @@
 import { Model, DataTypes } from "sequelize";
 import { centralDatabase } from "../../config/dbconfig.js";
 
-class User extends Model {}
+class User extends Model {
+  public id!: number;
+  public name!: string;
+  public username!: string;
+  public email!: string;
+  public password!: string;
+  public role!: string;
+}
 
 User.init(
   {
@@ -23,13 +30,14 @@ User.init(
       allowNull: false,
     },
     password: {
-        type: DataTypes.STRING,
-        allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     profileImage: {
-        type:  DataTypes.STRING,
-        allowNull: true,
+      type: DataTypes.STRING,
+      allowNull: true,
     },
+    role: DataTypes.ENUM("User", "Owner"),
   },
   {
     sequelize: centralDatabase.getInstance(),

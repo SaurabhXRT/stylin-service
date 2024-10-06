@@ -1,7 +1,6 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import dotenv from 'dotenv-flow';
 import { UserLoginSession } from '../models/LoginSession/User.Loginsession.js';
-import { OwnerLoginSession } from '../models/LoginSession/Owner.loginsession.js';
 import { StaffLoginSession } from '../models/LoginSession/Staff.loginsession.js';
 dotenv.config();
 
@@ -15,21 +14,21 @@ export class AuthMiddleware {
     static async verifyToken(req: any, res: any, next: any) {
         const token = req.headers.authorization;
         if (!token) {
-            return res.status(401).send("Unauthorized");
+            return "Unauthorized";
         }
         try {
             const isValid = await AuthMiddleware.validateToken(token);
             if (!isValid) {
-                return res.status(401).send("Invalid token");
+                return "Invalid token";
             }
 
-            const { userId, ownerId , staffId } = await AuthMiddleware.getActorIdFromToken(token);
+            const { userId,ownerId, staffId } = await AuthMiddleware.getActorIdFromToken(token);
             if (userId) {
                 req.userId = userId;
-            } else if (ownerId) {
-                req.ownerId = ownerId;
             } else if(staffId) {
                 req.staffId = staffId;
+            } else if(ownerId){
+                req.ownerId = ownerId;
             }
              else {
                 throw new Error("Unauthorized");
@@ -56,7 +55,7 @@ export class AuthMiddleware {
             const decoded = jwt.verify(token, secret) as CustomJwtPayload;
             console.log(decoded);
 
-            let loginSession: UserLoginSession | OwnerLoginSession | StaffLoginSession;
+            let loginSession: UserLoginSession | StaffLoginSession;
             if (decoded.userId) {
                 loginSession = await UserLoginSession.findOne({
                     where: {
@@ -69,17 +68,17 @@ export class AuthMiddleware {
                         userId: decoded.userId 
                     };
                 }
-            } else if (decoded.ownerId) {
-                loginSession = await OwnerLoginSession.findOne({
+            } else if (decoded.ownerId){
+                loginSession = await UserLoginSession.findOne({
                     where: {
-                        ownerId: decoded.ownerId,
+                        userId: decoded.ownerId,
                         token: token,
                     }
                 });
                 if (loginSession) {
-                    return {
-                         ownerId: decoded.ownerId 
-                        };
+                    return { 
+                        ownerId: decoded.ownerId 
+                    };
                 }
             } else if (decoded.staffId){
                 loginSession = await StaffLoginSession.findOne({

@@ -1,9 +1,9 @@
-import { Owner } from "../../models/Owner/Owner";
+import { User } from '../../models/User/User.js';
 
 export class OwnerMiddleware {
     static async isOwner(req: any) {
         try {
-            const owner = await Owner.findByPk(req.ownerId);
+            const owner = await User.findByPk(req.ownerId);
             if (!owner) {
                 throw new Error("Unauthorized: owner not found");
             }

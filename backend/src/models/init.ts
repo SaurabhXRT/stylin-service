@@ -3,10 +3,8 @@ import dotenv from "dotenv-flow";
 dotenv.config();
 import logger from "../logger/logger.js";
 import { UserLoginSession } from "./LoginSession/User.Loginsession.js";
-import { OwnerLoginSession } from "./LoginSession/Owner.loginsession.js";
 import { StaffLoginSession } from "./LoginSession/Staff.loginsession.js";
 import {User} from "./User/User.js";
-import { Owner } from "./Owner/Owner.js";
 import { Staff } from "./Staff/Staff.js";
 import { Salon } from "./Salon/Salon.js";
 
@@ -26,20 +24,8 @@ export async function initDatabase(db: Database, dbOptions: DbOptions) {
         foreignKey: "userId",
         as: "users"
     });
-
-    await Owner.sync();
-    logger.log("owner model initiated sucessfully");
     await Staff.sync();
     logger.log("staff model initiated successfully");
-
-    Owner.hasMany(OwnerLoginSession, {
-        foreignKey: "ownerId",
-        as: "ownerloginsession"
-    });
-    OwnerLoginSession.belongsTo(Owner, {
-        foreignKey: "OwnerId",
-        as: "owner"
-    });
     Staff.hasMany(StaffLoginSession, {
         foreignKey: "staffId",
         as: "staffloginsession"
@@ -61,11 +47,11 @@ export async function initDatabase(db: Database, dbOptions: DbOptions) {
         as: "salon"
     });
 
-    Owner.hasOne(Salon, {
+    User.hasOne(Salon, {
         foreignKey: "ownerId",
         as: "salon"
     });
-    Salon.belongsTo(Owner, {
+    Salon.belongsTo(User, {
         foreignKey: "ownerId",
         as: "owner"
     });

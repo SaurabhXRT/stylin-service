@@ -141,7 +141,7 @@ function _ts_generator(thisArg, body) {
         };
     }
 }
-import { Owner } from "../../models/Owner/Owner";
+import { User } from '../../models/User/User.js';
 export var OwnerMiddleware = /*#__PURE__*/ function() {
     "use strict";
     function OwnerMiddleware() {
@@ -164,7 +164,7 @@ export var OwnerMiddleware = /*#__PURE__*/ function() {
                                 ]);
                                 return [
                                     4,
-                                    Owner.findByPk(req.ownerId)
+                                    User.findByPk(req.ownerId)
                                 ];
                             case 1:
                                 owner = _state.sent();

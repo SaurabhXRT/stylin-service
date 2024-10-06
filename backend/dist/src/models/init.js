@@ -126,10 +126,8 @@ import dotenv from "dotenv-flow";
 dotenv.config();
 import logger from "../logger/logger.js";
 import { UserLoginSession } from "./LoginSession/User.Loginsession.js";
-import { OwnerLoginSession } from "./LoginSession/Owner.loginsession.js";
 import { StaffLoginSession } from "./LoginSession/Staff.loginsession.js";
 import { User } from "./User/User.js";
-import { Owner } from "./Owner/Owner.js";
 import { Staff } from "./Staff/Staff.js";
 import { Salon } from "./Salon/Salon.js";
 export function initDatabase(db, dbOptions) {
@@ -170,26 +168,11 @@ function _initDatabase() {
                     });
                     return [
                         4,
-                        Owner.sync()
+                        Staff.sync()
                     ];
                 case 4:
                     _state.sent();
-                    logger.log("owner model initiated sucessfully");
-                    return [
-                        4,
-                        Staff.sync()
-                    ];
-                case 5:
-                    _state.sent();
                     logger.log("staff model initiated successfully");
-                    Owner.hasMany(OwnerLoginSession, {
-                        foreignKey: "ownerId",
-                        as: "ownerloginsession"
-                    });
-                    OwnerLoginSession.belongsTo(Owner, {
-                        foreignKey: "OwnerId",
-                        as: "owner"
-                    });
                     Staff.hasMany(StaffLoginSession, {
                         foreignKey: "staffId",
                         as: "staffloginsession"
@@ -202,7 +185,7 @@ function _initDatabase() {
                         4,
                         Salon.sync()
                     ];
-                case 6:
+                case 5:
                     _state.sent();
                     logger.log("salon model initiated successfully");
                     Salon.hasMany(Staff, {
@@ -213,11 +196,11 @@ function _initDatabase() {
                         foreignKey: "salonId",
                         as: "salon"
                     });
-                    Owner.hasOne(Salon, {
+                    User.hasOne(Salon, {
                         foreignKey: "ownerId",
                         as: "salon"
                     });
-                    Salon.belongsTo(Owner, {
+                    Salon.belongsTo(User, {
                         foreignKey: "ownerId",
                         as: "owner"
                     });
