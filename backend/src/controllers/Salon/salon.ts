@@ -29,3 +29,17 @@ export const getsalonController = async(_:any,__:any,context:any) => {
         throw new Error("error getting salon");
     }
 }
+
+export const getSalonStaffController = async(_:any,{ salonId }: any) => {
+    try{
+        if(!salonId){
+            throw new Error("salonId is required");
+        }
+        const staffs = await salonservice.getSalonStaffs(salonId);
+        return staffs;
+    }catch(error){
+        logger.log(error);
+        throw new Error("error getting salon staff");
+    }
+
+}

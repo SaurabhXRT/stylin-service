@@ -51,7 +51,7 @@ export class UserService {
             if (!user) {
                 return null;
             }
-            logger.log("user password fom db",user.toJSON().name);
+            logger.log("user password fom db",user.toJSON().password);
             const passwordMatches = await bcrypt.compare(password, user.toJSON().password);
             if (passwordMatches) {
                 return user.toJSON();

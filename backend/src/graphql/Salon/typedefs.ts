@@ -5,21 +5,52 @@ export const typeDefs = gql`
     name: String!
     placename: String!
     longitude: Float!
-    latitude: Float!  
+    latitude: Float!
     ownerId: ID!
+  }
+  type Staff {
+    id: ID!
+    name: String!
+    email: String!
+    contactNumber: String!
+    address: String
+    role: String!
+    department: String
+    jobTitle: String!
+    expertise: String
+    dateOfJoining: String!
+    workHours: String
+    shift: String
+    profileImage: String
+    status: String
+    salonId: ID!
   }
 
   type Query {
     getSalons(ownerId: ID!): Salon
+    getSalonStaffs(salonId: ID!): [Staff!]
   }
 
   type Mutation {
-   createSalon(
-   name: String!
-    placename: String!
-    longitude: Float!
-    latitude: Float!
+    createSalon(
+      name: String!
+      placename: String!
+      longitude: Float!
+      latitude: Float!
     ): Salon
+    createStaff(
+      name: String!
+      email: String!
+      contactNumber: String!
+      address: String
+      role: String!
+      department: String
+      jobTitle: String!
+      expertise: String
+      workHours: String
+      shift: String
+      profileImage: String
+      status: String
+    ): Staff
   }
 `;
- 

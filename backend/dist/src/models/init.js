@@ -130,6 +130,8 @@ import { StaffLoginSession } from "./LoginSession/Staff.loginsession.js";
 import { User } from "./User/User.js";
 import { Staff } from "./Staff/Staff.js";
 import { Salon } from "./Salon/Salon.js";
+import { Service } from "./Service/StaffService.js";
+import { Feedback } from "./UserFeedback/UserFeedback.js";
 export function initDatabase(db, dbOptions) {
     return _initDatabase.apply(this, arguments);
 }
@@ -203,6 +205,52 @@ function _initDatabase() {
                     Salon.belongsTo(User, {
                         foreignKey: "ownerId",
                         as: "owner"
+                    });
+                    return [
+                        4,
+                        Feedback.sync()
+                    ];
+                case 6:
+                    _state.sent();
+                    logger.log("feedback model initiated successfully");
+                    return [
+                        4,
+                        Service.sync()
+                    ];
+                case 7:
+                    _state.sent();
+                    logger.log("service model initiated successfully");
+                    User.hasMany(Feedback, {
+                        foreignKey: "userId",
+                        as: "feedbacks"
+                    });
+                    Feedback.belongsTo(User, {
+                        foreignKey: "userId",
+                        as: "user"
+                    });
+                    Staff.hasMany(Feedback, {
+                        foreignKey: "staffId",
+                        as: "stafffeedbacks"
+                    });
+                    Feedback.belongsTo(Staff, {
+                        foreignKey: "staffId",
+                        as: "staff"
+                    });
+                    User.hasMany(Service, {
+                        foreignKey: "userId",
+                        as: "services"
+                    });
+                    Service.belongsTo(User, {
+                        foreignKey: "userId",
+                        as: "user"
+                    });
+                    Staff.hasMany(Service, {
+                        foreignKey: "staffId",
+                        as: "staffservices"
+                    });
+                    Service.belongsTo(Staff, {
+                        foreignKey: "staffId",
+                        as: "staff"
                     });
                     logger.log("all models initioiated successfully");
                     return [

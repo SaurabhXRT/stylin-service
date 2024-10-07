@@ -13,6 +13,19 @@ function _class_call_check(instance, Constructor) {
         throw new TypeError("Cannot call a class as a function");
     }
 }
+function _define_property(obj, key, value) {
+    if (key in obj) {
+        Object.defineProperty(obj, key, {
+            value: value,
+            enumerable: true,
+            configurable: true,
+            writable: true
+        });
+    } else {
+        obj[key] = value;
+    }
+    return obj;
+}
 function _get_prototype_of(o) {
     _get_prototype_of = Object.setPrototypeOf ? Object.getPrototypeOf : function getPrototypeOf(o) {
         return o.__proto__ || Object.getPrototypeOf(o);
@@ -64,7 +77,9 @@ var Salon = /*#__PURE__*/ function(Model) {
     _inherits(Salon, Model);
     function Salon() {
         _class_call_check(this, Salon);
-        return _call_super(this, Salon, arguments);
+        var _this;
+        _this = _call_super(this, Salon, arguments), _define_property(_this, "id", void 0);
+        return _this;
     }
     return Salon;
 }(Model);

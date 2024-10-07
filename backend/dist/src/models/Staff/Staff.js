@@ -13,6 +13,19 @@ function _class_call_check(instance, Constructor) {
         throw new TypeError("Cannot call a class as a function");
     }
 }
+function _define_property(obj, key, value) {
+    if (key in obj) {
+        Object.defineProperty(obj, key, {
+            value: value,
+            enumerable: true,
+            configurable: true,
+            writable: true
+        });
+    } else {
+        obj[key] = value;
+    }
+    return obj;
+}
 function _get_prototype_of(o) {
     _get_prototype_of = Object.setPrototypeOf ? Object.getPrototypeOf : function getPrototypeOf(o) {
         return o.__proto__ || Object.getPrototypeOf(o);
@@ -64,7 +77,9 @@ var Staff = /*#__PURE__*/ function(Model) {
     _inherits(Staff, Model);
     function Staff() {
         _class_call_check(this, Staff);
-        return _call_super(this, Staff, arguments);
+        var _this;
+        _this = _call_super(this, Staff, arguments), _define_property(_this, "salonId", void 0), _define_property(_this, "profileImage", void 0);
+        return _this;
     }
     return Staff;
 }(Model);

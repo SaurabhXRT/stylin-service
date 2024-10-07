@@ -125,6 +125,7 @@ function _ts_generator(thisArg, body) {
 import express from "express";
 import logger from "./logger/logger.js";
 import bodyParser from "body-parser";
+import cors from "cors";
 import { expressMiddleware } from "@apollo/server/express4";
 import { createApolloGraphqlServer } from "./graphql/index.js";
 import { AuthMiddleware } from "./middlewares/auth.js";
@@ -137,6 +138,9 @@ server.use(bodyParser.urlencoded({
     extended: true
 }));
 server.use(express.json());
+server.use(cors({
+    origin: process.env.CORS_WHITELISTED
+}));
 var startgql = /*#__PURE__*/ function() {
     var _ref = _async_to_generator(function() {
         var initializegraphql;
@@ -239,7 +243,7 @@ process.on("unhandledRejection", function(err) {
 });
 server.get("/", function(req, res) {
     res.json({
-        message: "Welcome to the stockanalytics API"
+        message: "Welcome to the salon management api"
     });
 });
 export default server;

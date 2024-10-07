@@ -1,7 +1,10 @@
 import { Model, DataTypes } from "sequelize";
 import { centralDatabase } from "../../config/dbconfig.js";
 
-class Staff extends Model {}
+class Staff extends Model {
+    salonId: any;
+    profileImage: any;
+}
 
 Staff.init(
   {
