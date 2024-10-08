@@ -33,12 +33,17 @@ export const createStaffController = async (_: any, payload: any, context: any) 
     }
 };
 
-export const getStaffProfileController = async(_any:any,{staffId}:any) => {
+export const getStaffProfileController = async(_any:any,{staffId}:any, context: any) => {
     try{
+        if(!context){
+            throw new Error("unauthorized");
+        }
         if(!staffId){
             throw new Error("staffid is required");
         }
+        console.log("staff id for viewing profile",staffId);
         const staff = await staffservice.getStaffProfile(staffId);
+        console.log(staff);
         return staff;
 
     }catch(error){

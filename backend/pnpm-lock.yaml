@@ -11,6 +11,9 @@ importers:
       apollo-server-express:
         specifier: ^3.13.0
         version: 3.13.0(express@4.21.0)(graphql@16.9.0)
+      graphql-upload-ts:
+        specifier: ^2.1.2
+        version: 2.1.2(graphql@16.9.0)
     devDependencies:
       '@apollo/server':
         specifier: ^4.11.0
@@ -1693,6 +1696,12 @@ packages:
 
   graphql-tools-merge-typedefs@2.0.1:
     resolution: {integrity: sha512-11ICuFkOGu3a1fyEYIE1GdS6A+iGaXGH2QdaOL+zC6h7hdIg3wEIXKjiyawV5x1ItJtZoAO//NV7+tFNlTtmUQ==}
+
+  graphql-upload-ts@2.1.2:
+    resolution: {integrity: sha512-g0mL/55NI1MzRrTczIJw1cruIrqlUm7liQRkuGl6l9s4/j0aSuPkvZ52BS7teI43g6KXE/NeDyUotEAiTyZdHw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      graphql: '>=0.13.1'
 
   graphql-upload@16.0.2:
     resolution: {integrity: sha512-enwIkZqUELdNH9lrjHlTNfj7gLitSa0EAX4TNXZtg2frnmQzPhpjH0l+6K7ft274fhoRCIcz8SKiNRJDf/cG4Q==}
@@ -4536,6 +4545,13 @@ snapshots:
       tslib: 2.7.0
 
   graphql-tools-merge-typedefs@2.0.1: {}
+
+  graphql-upload-ts@2.1.2(graphql@16.9.0):
+    dependencies:
+      busboy: 1.6.0
+      graphql: 16.9.0
+      http-errors: 2.0.0
+      object-path: 0.11.8
 
   graphql-upload@16.0.2(@types/express@5.0.0)(@types/koa@2.15.0)(graphql@16.9.0):
     dependencies:

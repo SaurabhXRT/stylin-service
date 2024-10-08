@@ -8,8 +8,6 @@ export const getCurrentUserController = async(__:any,_:any,context:any) => {
           user = await service.getUserById(context.userId);
         } else if (context.ownerId) {
           user = await service.getUserById(context.ownerId);
-        } else if (context.staffId) {
-          user = await service.getStaffById(context.staffId);
         }
         if(!user){
             throw new Error("no user found");
@@ -20,3 +18,4 @@ export const getCurrentUserController = async(__:any,_:any,context:any) => {
     }
    
 }
+

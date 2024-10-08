@@ -37,6 +37,9 @@ const SalonCard: React.FC = () => {
   const handleCreateStaffClick = (salonId: string) => {
     navigate(`/owner-dashboard/salon/create-staff/${salonId}`);
   };
+  const handleViewStaffClick = (salonId: string) => {
+    navigate(`/owner-dashboard/salon/${salonId}`);
+  };
 
   if (loading) {
     return <p>Loading salons...</p>;
@@ -61,18 +64,21 @@ const SalonCard: React.FC = () => {
               <CardContent>
                 <p className="text-gray-500">{salon.placename}</p>
               </CardContent>
-              <Button 
-                  onClick={() => handleCreateStaffClick(salon.id)} 
-                  className="mt-4"
-                >
-                  Create Staff
-                </Button>
+              <Button
+                onClick={() => handleCreateStaffClick(salon.id)}
+                className="mt-4"
+              >
+                Create Staff
+              </Button>
+              <Button
+                onClick={() => handleViewStaffClick(salon.id)}
+                className="mt-2 mx-2"
+              >
+                View All Staffs
+              </Button>
             </Card>
-          ))
-          }
-       {!salons && 
-          <p>No salons available at the moment.</p>}
-        
+          ))}
+        {!salons && <p>No salons available at the moment.</p>}
       </div>
     </div>
   );

@@ -82,7 +82,8 @@ export class SalonService {
           salonId: salonId,
         },
       });
-      return staff;
+      const staffdata = staff.map(st => st.toJSON());
+      return staffdata;
     } catch (error) {
       logger.log(error);
       throw new Error("error getting salonstaff");

@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { loginStaff } from "../../services/userService";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../redux/authSlice";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -29,7 +31,7 @@ const formSchema = z.object({
 
 export function LoginStaffForm() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,9 +42,11 @@ export function LoginStaffForm() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await loginStaff(values);
+      const response = await loginStaff(values);
+      const { token, role } = response;
+      dispatch(loginSuccess({ token, userRole: role }));
       toast.success("login successful!");
-      navigate("/login");
+      navigate("/staff-dashboard");
     } catch (error) {
       console.log(error);
       toast.error("login failed!");

@@ -132,6 +132,7 @@ import { AuthMiddleware } from "./middlewares/auth.js";
 import { UserMiddleware } from "./middlewares/actors/auth.user.js";
 import { StaffMiddleware } from "./middlewares/actors/auth.staff.js";
 import { OwnerMiddleware } from "./middlewares/actors/auth.owner.js";
+import { graphqlUploadExpress } from 'graphql-upload-ts';
 var server = express();
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({
@@ -141,6 +142,7 @@ server.use(express.json());
 server.use(cors({
     origin: process.env.CORS_WHITELISTED
 }));
+server.use(graphqlUploadExpress());
 var startgql = /*#__PURE__*/ function() {
     var _ref = _async_to_generator(function() {
         var initializegraphql;
@@ -153,7 +155,7 @@ var startgql = /*#__PURE__*/ function() {
                     ];
                 case 1:
                     initializegraphql = _state.sent();
-                    server.use("/graphql", expressMiddleware(initializegraphql, {
+                    server.use("/graphql", graphqlUploadExpress(), expressMiddleware(initializegraphql, {
                         context: /*#__PURE__*/ function() {
                             var _ref = _async_to_generator(function(param) {
                                 var req, context;

@@ -9,6 +9,7 @@ import { UserMiddleware } from "./middlewares/actors/auth.user.js";
 import { StaffMiddleware } from "./middlewares/actors/auth.staff.js";
 import { OwnerMiddleware } from "./middlewares/actors/auth.owner.js";
 import { Context } from "./graphql/types.js";
+import { graphqlUploadExpress } from 'graphql-upload-ts';
 const server: Express = express();
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
@@ -18,10 +19,11 @@ server.use(
     origin: process.env.CORS_WHITELISTED,
   })
 );
+server.use(graphqlUploadExpress());
 const startgql = async () => {
   const initializegraphql = await createApolloGraphqlServer();
   server.use(
-    "/graphql",
+    "/graphql",graphqlUploadExpress(),
     expressMiddleware(initializegraphql, {
       context: async ({ req }): Promise<Context> => {
         await AuthMiddleware.verifyToken(req);

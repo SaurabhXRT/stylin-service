@@ -97,11 +97,15 @@ export class UserAuthService {
           expiresIn: "1d",
         }
       );
-      const loginSession = await StaffLoginSession.create({
-        userId: staff.id,
+      await StaffLoginSession.create({
+        staffId: staff.id,
         token: token,
       });
-      return loginSession;
+      const responsedata = {
+        token: token,
+        role: "Staff"
+      }
+      return responsedata;
     } catch (error) {
       logger.log(error);
       throw new Error("error in logging in");

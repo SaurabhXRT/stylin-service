@@ -2,8 +2,9 @@ import { Model, DataTypes } from "sequelize";
 import { centralDatabase } from "../../config/dbconfig.js";
 
 class Staff extends Model {
-    salonId: any;
-    profileImage: any;
+  salonId: any;
+  profileImage: any;
+  salon: any;
 }
 
 Staff.init(
@@ -34,7 +35,13 @@ Staff.init(
       allowNull: true,
     },
     role: {
-      type: DataTypes.ENUM("Manager", "Stylist", "Therapist", "Assistant", "hairdresser"),
+      type: DataTypes.ENUM(
+        "Manager",
+        "Stylist",
+        "Therapist",
+        "Assistant",
+        "hairdresser"
+      ),
       allowNull: false,
     },
     department: {
@@ -70,9 +77,9 @@ Staff.init(
       defaultValue: "Active",
     },
     salonId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    }
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     sequelize: centralDatabase.getInstance(),

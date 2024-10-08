@@ -3,16 +3,27 @@ import { getStaffProfileController } from "../../controllers/Salon/staff.js";
 import {
   deleteStaffController,
   uploadStaffImageController,
+  recordStaffServiceController,
+  getStaffClientServiceController,
+  getSalonOfStaffController,
+  getStaffOwnProfileController,
 } from "../../controllers/Staff/staff.js";
 import {
   createFeedbackController,
   getStaffFeedbackcontroller,
 } from "../../controllers/Staff/feedback.js";
+import { GraphQLUpload } from 'graphql-upload-ts';
 const queries = {
-  getStaffProfile: (_: any, { staffId }: any) =>
-    getStaffProfileController(_, { staffId }),
+  getStaffProfile: (_: any, { staffId }: any, context: any) =>
+    getStaffProfileController(_, { staffId }, context),
   getStaffFeedback: (_: any, { staffId }: any, context: any) =>
     getStaffFeedbackcontroller(_, { staffId }, context),
+  getStaffClientService: (_: any, { staffId, period }: any, context: any) =>
+    getStaffClientServiceController(_, { staffId, period }, context),
+  getSalonOfStaff: (_: any, __: any, context: any) =>
+    getSalonOfStaffController(_, __, context),
+  getStaffOwnProfile: (_: any, __: any, context: any) =>
+    getStaffOwnProfileController(_, __, context),
 };
 const mutations = {
   deleteStaff: (_: any, { staffId }: any, context: any) =>
@@ -21,5 +32,7 @@ const mutations = {
     uploadStaffImageController(_, { profileImage }, context),
   giveFeedback: (_: any, payload: any, context: any) =>
     createFeedbackController(_, payload, context),
+  recordStaffService: (_: any, { staffId }: any, context: any) =>
+    recordStaffServiceController(_, { staffId }, context),
 };
-export const resolvers = { mutations, queries };
+export const resolvers = {Upload: GraphQLUpload, mutations, queries };

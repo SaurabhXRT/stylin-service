@@ -30,6 +30,8 @@ export async function initDatabase(db: Database, dbOptions: DbOptions) {
   });
   await Staff.sync();
   logger.log("staff model initiated successfully");
+  await StaffLoginSession.sync();
+  logger.log("staffloginsession created successfully");
   Staff.hasMany(StaffLoginSession, {
     foreignKey: "staffId",
     as: "staffloginsession",

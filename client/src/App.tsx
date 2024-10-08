@@ -8,6 +8,10 @@ import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { OwnerDashboard } from "./pages/owner/OwnerDashboard";
 import { CreateSalonPage } from "./pages/owner/CreateSalon";
 import CreateStaffPage from "./pages/owner/CreateStaff";
+import { StaffTableOwner } from "./pages/owner/StaffTablePage";
+import { StaffTable } from "./pages/user/StaffTable";
+import { StaffServicePage } from "./pages/user/StaffServicePage";
+import { StaffDashboardPage } from "./pages/staff/StaffDashboard";
 function App() {
   return (
     <div className="App">
@@ -25,6 +29,10 @@ function App() {
             path="/owner-dashboard"
             element={<ProtectedRoute role="Owner" component={OwnerDashboard} />}
           />
+           <Route
+            path="/staff-dashboard"
+            element={<ProtectedRoute role="Staff" component={StaffDashboardPage} />}
+          />
           <Route
             path="/owner-dashboard/create-salon"
             element={
@@ -36,6 +44,20 @@ function App() {
             element={
               <ProtectedRoute role="Owner" component={CreateStaffPage} />
             }
+          />
+          <Route
+            path="/owner-dashboard/salon/:salonId"
+            element={
+              <ProtectedRoute role="Owner" component={StaffTableOwner} />
+            }
+          />
+          <Route
+            path="/user-dashboard/salon/:salonId"
+            element={<ProtectedRoute role="User" component={StaffTable} />}
+          />
+          <Route
+            path="/user-dashboard/salon/staff/:staffId"
+            element={<ProtectedRoute role="User" component={StaffServicePage} />}
           />
         </Routes>
       </Router>

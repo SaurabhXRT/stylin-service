@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface Salon {
   id: string;
@@ -34,7 +35,8 @@ const SalonList: React.FC = () => {
     fetchSalons();
   }, []);
 
-  const handleCardClick = (salonId: string) => {
+ 
+  const handleViewStaffClick = (salonId: string) => {
     navigate(`/user-dashboard/salon/${salonId}`);
   };
 
@@ -51,7 +53,6 @@ const SalonList: React.FC = () => {
             <Card
               key={salon.id}
               className="p-4 bg-white shadow-lg rounded-lg cursor-pointer hover:shadow-xl transition-shadow"
-              onClick={() => handleCardClick(salon.id)}
             >
               <CardHeader>
                 <CardTitle>{salon.name}</CardTitle>
@@ -59,6 +60,12 @@ const SalonList: React.FC = () => {
               <CardContent>
                 <p className="text-gray-500">{salon.placename}</p>
               </CardContent>
+              <Button
+                onClick={() => handleViewStaffClick(salon.id)}
+                className="mt-2 mx-2"
+              >
+                View All Staffs
+              </Button>
             </Card>
           ))
         ) : (

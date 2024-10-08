@@ -22,7 +22,7 @@ export const LOGIN_STAFF = gql`
   mutation loginStaff($email: String!, $password: String!) {
     loginStaff(email: $email, password: $password) {
       token
-      staffId
+      role
     }
   }
 `;

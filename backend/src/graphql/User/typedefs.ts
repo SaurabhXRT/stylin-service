@@ -11,7 +11,7 @@ export const typeDefs = gql`
 
   type StaffAuthResponse {
     token: String!
-    staffId: ID!
+    role: String!
   }
 
   type RegisterUserResponse {
@@ -37,14 +37,8 @@ export const typeDefs = gql`
       role: String!
     ): RegisterUserResponse!
 
-    loginUser(
-      username: String!, 
-      password: String!
-    ): LoginUserResponse!
+    loginUser(username: String!, password: String!): LoginUserResponse!
 
-    loginStaff(
-      email: String!, 
-      password: String!
-    ): StaffAuthResponse!
+    loginStaff(email: String!, password: String!): StaffAuthResponse!
   }
 `;

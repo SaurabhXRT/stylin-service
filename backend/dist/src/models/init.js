@@ -183,6 +183,13 @@ function _initDatabase() {
                 case 5:
                     _state.sent();
                     logger.log("staff model initiated successfully");
+                    return [
+                        4,
+                        StaffLoginSession.sync()
+                    ];
+                case 6:
+                    _state.sent();
+                    logger.log("staffloginsession created successfully");
                     Staff.hasMany(StaffLoginSession, {
                         foreignKey: "staffId",
                         as: "staffloginsession"
@@ -195,7 +202,7 @@ function _initDatabase() {
                         4,
                         Salon.sync()
                     ];
-                case 6:
+                case 7:
                     _state.sent();
                     logger.log("salon model initiated successfully");
                     Salon.hasMany(Staff, {
@@ -218,14 +225,14 @@ function _initDatabase() {
                         4,
                         Feedback.sync()
                     ];
-                case 7:
+                case 8:
                     _state.sent();
                     logger.log("feedback model initiated successfully");
                     return [
                         4,
                         Service.sync()
                     ];
-                case 8:
+                case 9:
                     _state.sent();
                     logger.log("service model initiated successfully");
                     User.hasMany(Feedback, {

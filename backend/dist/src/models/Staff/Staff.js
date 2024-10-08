@@ -78,7 +78,7 @@ var Staff = /*#__PURE__*/ function(Model) {
     function Staff() {
         _class_call_check(this, Staff);
         var _this;
-        _this = _call_super(this, Staff, arguments), _define_property(_this, "salonId", void 0), _define_property(_this, "profileImage", void 0);
+        _this = _call_super(this, Staff, arguments), _define_property(_this, "salonId", void 0), _define_property(_this, "profileImage", void 0), _define_property(_this, "salon", void 0);
         return _this;
     }
     return Staff;

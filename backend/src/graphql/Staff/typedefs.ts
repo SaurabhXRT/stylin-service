@@ -27,13 +27,33 @@ export const typeDefs = gql`
     staffId: ID!
     createdAt: String!
   }
+  type Return {
+    message: String!
+  }
+  type Owner {
+    id: ID!
+    name: String!
+    email: String!
+  }
+  type Salon {
+    id: ID!
+    name: String!
+    placename: String!
+    longitude: Float!
+    latitude: Float!
+    owner: Owner!
+  }
   type Query {
-    getStaffProfile(staffId: ID!): [Staff!]
+    getStaffProfile(staffId: ID!): Staff!
     getStaffFeedback(staffId: ID!): [Feedback!]
+    getStaffClientService(staffId: ID!, period: String!): Int!
+    getSalonOfStaff: Salon!
+    getStaffOwnProfile: Staff!
   }
   type Mutation {
     deleteStaff(staffId: ID!): Boolean
     uploadStaffImage(profileImage: Upload!): Staff
     giveFeedback(staffId: ID!, rating: Int!, comment: String): Feedback!
+    recordStaffService(staffId: ID!): Return!
   }
 `;

@@ -42,8 +42,6 @@ export const GET_SALON_STAFFS = gql`
       dateOfJoining
       workHours
       shift
-      profileImage
-      status
       salonId
     }
   }
