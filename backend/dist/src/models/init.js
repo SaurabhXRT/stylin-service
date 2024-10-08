@@ -132,6 +132,7 @@ import { Staff } from "./Staff/Staff.js";
 import { Salon } from "./Salon/Salon.js";
 import { Service } from "./Service/StaffService.js";
 import { Feedback } from "./UserFeedback/UserFeedback.js";
+import { CityDetail } from "./Cities/cities.js";
 export function initDatabase(db, dbOptions) {
     return _initDatabase.apply(this, arguments);
 }
@@ -160,6 +161,13 @@ function _initDatabase() {
                 case 3:
                     _state.sent();
                     logger.log("user model initiated successfully");
+                    return [
+                        4,
+                        CityDetail.sync()
+                    ];
+                case 4:
+                    _state.sent();
+                    logger.log("citydetail model initiated successfully");
                     User.hasMany(UserLoginSession, {
                         foreignKey: "userId",
                         as: "userloginsession"
@@ -172,7 +180,7 @@ function _initDatabase() {
                         4,
                         Staff.sync()
                     ];
-                case 4:
+                case 5:
                     _state.sent();
                     logger.log("staff model initiated successfully");
                     Staff.hasMany(StaffLoginSession, {
@@ -187,7 +195,7 @@ function _initDatabase() {
                         4,
                         Salon.sync()
                     ];
-                case 5:
+                case 6:
                     _state.sent();
                     logger.log("salon model initiated successfully");
                     Salon.hasMany(Staff, {
@@ -198,7 +206,7 @@ function _initDatabase() {
                         foreignKey: "salonId",
                         as: "salon"
                     });
-                    User.hasOne(Salon, {
+                    User.hasMany(Salon, {
                         foreignKey: "ownerId",
                         as: "salon"
                     });
@@ -210,14 +218,14 @@ function _initDatabase() {
                         4,
                         Feedback.sync()
                     ];
-                case 6:
+                case 7:
                     _state.sent();
                     logger.log("feedback model initiated successfully");
                     return [
                         4,
                         Service.sync()
                     ];
-                case 7:
+                case 8:
                     _state.sent();
                     logger.log("service model initiated successfully");
                     User.hasMany(Feedback, {

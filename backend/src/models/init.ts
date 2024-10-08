@@ -9,6 +9,7 @@ import { Staff } from "./Staff/Staff.js";
 import { Salon } from "./Salon/Salon.js";
 import { Service } from "./Service/StaffService.js";
 import { Feedback } from "./UserFeedback/UserFeedback.js";
+import { CityDetail } from "./Cities/cities.js";
 
 export async function initDatabase(db: Database, dbOptions: DbOptions) {
   await db.initInstance(dbOptions);
@@ -16,7 +17,8 @@ export async function initDatabase(db: Database, dbOptions: DbOptions) {
   logger.log("userloginsession model initiated");
   await User.sync();
   logger.log("user model initiated successfully");
-
+  await CityDetail.sync();
+  logger.log("citydetail model initiated successfully");
   User.hasMany(UserLoginSession, {
     foreignKey: "userId",
     as: "userloginsession",
@@ -49,7 +51,7 @@ export async function initDatabase(db: Database, dbOptions: DbOptions) {
     as: "salon",
   });
 
-  User.hasOne(Salon, {
+  User.hasMany(Salon, {
     foreignKey: "ownerId",
     as: "salon",
   });

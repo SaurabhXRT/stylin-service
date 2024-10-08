@@ -20,10 +20,9 @@ interface StaffLoginInput {
   password: string;
 }
 
-export const getMe = async (id: string) => {
+export const getMe = async () => {
   const response = await client.query({
     query: GET_ME,
-    variables: { id },
   });
   return response.data.getMe;
 };

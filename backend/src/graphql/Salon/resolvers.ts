@@ -1,14 +1,16 @@
 import {
   createsalonController,
-  getsalonController,
+  getownersalonController,
   getSalonStaffController,
+  getAllSalonController,
 } from "../../controllers/Salon/salon.js";
 import { createStaffController } from "../../controllers/Salon/staff.js";
 const queries = {
-  getSalons: (_: any, __: any, context: any) =>
-    getsalonController(_, __, context),
+  getOwnerSalons: (_: any, __: any, context: any) =>
+    getownersalonController(_, __, context),
   getSalonStaffs: (_: any, { salonId }: any) =>
     getSalonStaffController(_, { salonId }),
+  getAllSalons: (_: any,__:any, context: any) => getAllSalonController(_,__, context),
 };
 const mutations = {
   createSalon: (_: any, payload: any, context: any) =>

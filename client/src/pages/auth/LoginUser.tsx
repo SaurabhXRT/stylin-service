@@ -14,10 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {loginUser } from "../../services/userService";
+import { loginUser } from "../../services/userService";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../redux/authSlice";
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
@@ -29,6 +31,7 @@ const formSchema = z.object({
 
 export function LoginUserForm() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,9 +43,17 @@ export function LoginUserForm() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await loginUser(values);
+      const response = await loginUser(values);
+      const { token, role } = response;
+      dispatch(loginSuccess({ token, userRole: role }));
       toast.success("login successful!");
-      navigate("/login");
+      if (role === "User") {
+        navigate("/user-dashboard");
+      } else if (role === "Owner") {
+        navigate("/owner-dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
       toast.error("login failed!");
@@ -92,6 +103,9 @@ export function LoginUserForm() {
             <Button type="submit">login</Button>
           </form>
         </Form>
+        <Link to="/signup" className="mt-40">
+          <p>don't have an account click to register here..</p>
+        </Link>
       </div>
     </div>
   );

@@ -19,10 +19,26 @@ export const createsalonController= async(_:any,payload:any,context:any) => {
     }
 }
 
-export const getsalonController = async(_:any,__:any,context:any) => {
+export const getAllSalonController = async(_:any,__:any,context:any) =>{
+    try{
+        const userId = context.userId;
+        logger.log(userId);
+        if(!userId){
+            throw new Error("you are not authorized");
+        }
+        const response = await salonservice.getAllSalons();
+        return response;
+    }catch(error){
+        logger.log(error);
+        throw new Error("error getting all salons");
+    }
+}
+
+export const getownersalonController = async(_:any,__:any,context:any) => {
     try{
         const ownerId = context.ownerId;
         const response = await salonservice.getsalonbyOwnerId(ownerId);
+        console.log(response);
         return response;
     }catch(error){
         logger.log(error);

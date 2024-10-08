@@ -163,7 +163,7 @@ var startgql = /*#__PURE__*/ function() {
                                             req = param.req;
                                             return [
                                                 4,
-                                                AuthMiddleware.verifyToken(req, null, null)
+                                                AuthMiddleware.verifyToken(req)
                                             ];
                                         case 1:
                                             _state.sent();

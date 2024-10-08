@@ -20,14 +20,27 @@ export class SalonService {
     }
   }
 
+  async getAllSalons(){
+    try{
+      const salons = await Salon.findAll();
+      const salondata = salons.map(salon => salon.toJSON());
+      return salondata;
+
+    }catch(error){
+      logger.log(error);
+      throw new Error("error getting all salons")
+    }
+  }
+
   async getsalonbyOwnerId(ownerId: any) {
     try {
-      const salon = await Salon.findOne({
+      const salon = await Salon.findAll({
         where: {
           ownerId: ownerId,
         },
       });
-      return salon;
+      const salondata = salon.map(salon => salon.toJSON());
+      return salondata;
     } catch (error) {
       logger.log(error);
       throw new Error("error getting salon");

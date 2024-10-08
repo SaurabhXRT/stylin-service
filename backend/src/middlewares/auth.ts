@@ -11,7 +11,7 @@ interface CustomJwtPayload extends JwtPayload {
 }
 
 export class AuthMiddleware {
-    static async verifyToken(req: any, res: any, next: any) {
+    static async verifyToken(req: any) {
         const token = req.headers.authorization;
         if (!token) {
             return "Unauthorized";
@@ -40,7 +40,7 @@ export class AuthMiddleware {
 
     static async validateToken(token: string) {
         try {
-            const secret: string = process.env.JWT_SECRET!;
+            const secret: string = process.env.JWT_SECRET_KEY;
             jwt.verify(token, secret);
             return true;
         } catch (error) {
@@ -51,7 +51,7 @@ export class AuthMiddleware {
 
     static async getActorIdFromToken(token: string) {
         try {
-            const secret: string = process.env.JWT_SECRET!;
+            const secret: string = process.env.JWT_SECRET_KEY;
             const decoded = jwt.verify(token, secret) as CustomJwtPayload;
             console.log(decoded);
 

@@ -27,8 +27,9 @@ export const typeDefs = gql`
   }
 
   type Query {
-    getSalons(ownerId: ID!): Salon
+    getOwnerSalons: [Salon!]
     getSalonStaffs(salonId: ID!): [Staff!]
+    getAllSalons: [Salon!]
   }
 
   type Mutation {

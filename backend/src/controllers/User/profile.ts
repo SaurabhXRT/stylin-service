@@ -14,6 +14,7 @@ export const getCurrentUserController = async(__:any,_:any,context:any) => {
         if(!user){
             throw new Error("no user found");
         }
+        return user;
     } catch(error){
         throw new Error("error fetching userprofile");
     }

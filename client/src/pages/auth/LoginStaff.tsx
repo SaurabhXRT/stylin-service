@@ -90,6 +90,7 @@ export function LoginStaffForm() {
             <Button type="submit">Login</Button>
           </form>
         </Form>
+        <p>you need to have login credentials provided by your owner..</p>
       </div>
     </div>
   );

@@ -154,7 +154,7 @@ export var AuthMiddleware = /*#__PURE__*/ function() {
     _create_class(AuthMiddleware, null, [
         {
             key: "verifyToken",
-            value: function verifyToken(req, res, next) {
+            value: function verifyToken(req) {
                 return _async_to_generator(function() {
                     var token, isValid, _ref, userId, ownerId, staffId, error;
                     return _ts_generator(this, function(_state) {
@@ -229,7 +229,7 @@ export var AuthMiddleware = /*#__PURE__*/ function() {
                     var secret;
                     return _ts_generator(this, function(_state) {
                         try {
-                            secret = process.env.JWT_SECRET;
+                            secret = process.env.JWT_SECRET_KEY;
                             jwt.verify(token, secret);
                             return [
                                 2,
@@ -263,7 +263,7 @@ export var AuthMiddleware = /*#__PURE__*/ function() {
                                     ,
                                     8
                                 ]);
-                                secret = process.env.JWT_SECRET;
+                                secret = process.env.JWT_SECRET_KEY;
                                 decoded = jwt.verify(token, secret);
                                 console.log(decoded);
                                 if (!decoded.userId) return [

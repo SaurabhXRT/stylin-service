@@ -32,11 +32,15 @@ export class UserAuthService {
       const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
         expiresIn: "1d",
       });
-      const loginSession = await UserLoginSession.create({
+      await UserLoginSession.create({
         userId: user.id,
         token: token,
       });
-      return loginSession;
+      const responsedata = {
+        token: token,
+        role: user.role
+      }
+      return responsedata;
     } catch (error) {
       logger.log(error);
       throw new Error("error occured while creating user");
@@ -52,6 +56,7 @@ export class UserAuthService {
       if (!user) {
         throw new Error("invalid credentials");
       }
+      
       let payload: any = {};
       if (user.role === "User") {
         payload.userId = user.id;
@@ -61,11 +66,15 @@ export class UserAuthService {
       const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
         expiresIn: "1d",
       });
-      const loginSession = await UserLoginSession.create({
+      await UserLoginSession.create({
         userId: user.id,
         token: token,
       });
-      return loginSession;
+      const responsedata = {
+        token: token,
+        role: user.role
+      }
+      return responsedata;
     } catch (error) {
       logger.log(error);
       throw new Error("error while logging in");

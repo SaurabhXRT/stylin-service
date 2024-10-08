@@ -24,7 +24,9 @@ import {
 import { registerUser } from "../../services/userService";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../redux/authSlice";
 const formSchema = z.object({
   name: z.string().min(1, {
     message: "Name is required.",
@@ -45,7 +47,7 @@ const formSchema = z.object({
 
 export function RegisterUserForm() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,9 +61,17 @@ export function RegisterUserForm() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await registerUser(values);
+      const response = await registerUser(values);
+      const { token, role } = response;
+      dispatch(loginSuccess({ token, userRole: role }));
       toast.success("Registration successful!");
-      navigate("/login");
+      if (role === "User") {
+        navigate("/user-dashboard");
+      } else if (role === "Owner") {
+        navigate("/owner-dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
       toast.error("Registration failed!");
@@ -143,10 +153,15 @@ export function RegisterUserForm() {
                 <FormItem>
                   <FormLabel>Role</FormLabel>
                   <FormControl>
-                    <Select {...field} defaultValue="User">
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select Role" />
-                      </SelectTrigger>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Select Role" />
+                        </SelectTrigger>
+                      </FormControl>
                       <SelectContent>
                         <SelectItem value="User">User</SelectItem>
                         <SelectItem value="Owner">Owner</SelectItem>
@@ -161,6 +176,9 @@ export function RegisterUserForm() {
             <Button type="submit">Register</Button>
           </form>
         </Form>
+        <Link to="/login" className="mt-40">
+          <p>already have an account click to login here..</p>
+        </Link>
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ const startgql = async () => {
     "/graphql",
     expressMiddleware(initializegraphql, {
       context: async ({ req }): Promise<Context> => {
-        await AuthMiddleware.verifyToken(req, null, null);
+        await AuthMiddleware.verifyToken(req);
         const context: Context = {};
 
         if (req.userId) {

@@ -1,17 +1,18 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import { NormalizedCacheObject } from '@apollo/client';
-
+import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import { NormalizedCacheObject } from "@apollo/client";
+import { store } from "../redux/store";
 const httpLink = createHttpLink({
-  uri: 'http://127.0.0.1:5000/graphql',
+  uri: "http://127.0.0.1:5000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('token');
+  const token = store.getState().auth.token;
+
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
+      authorization: token ? token : "",
     },
   };
 });

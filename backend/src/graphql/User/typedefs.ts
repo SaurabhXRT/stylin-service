@@ -9,17 +9,25 @@ export const typeDefs = gql`
     role: String!
   }
 
-  type Query {
-    getMe(id: ID!): User
-  }
-  type AuthResponse {
-    token: String!
-    userId: ID!
-  }
   type StaffAuthResponse {
     token: String!
     staffId: ID!
   }
+
+  type RegisterUserResponse {
+    token: String!
+    role: String!
+  }
+
+  type LoginUserResponse {
+    token: String!
+    role: String!
+  }
+
+  type Query {
+    getMe: User
+  }
+
   type Mutation {
     registerUser(
       name: String!
@@ -27,8 +35,16 @@ export const typeDefs = gql`
       email: String!
       password: String!
       role: String!
-    ): AuthResponse!
-    loginUser(username: String!, password: String!): AuthResponse!
-    loginStaff(email: String!, password: String!): StaffAuthResponse!
+    ): RegisterUserResponse!
+
+    loginUser(
+      username: String!, 
+      password: String!
+    ): LoginUserResponse!
+
+    loginStaff(
+      email: String!, 
+      password: String!
+    ): StaffAuthResponse!
   }
 `;

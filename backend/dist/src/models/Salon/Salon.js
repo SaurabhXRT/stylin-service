@@ -93,7 +93,7 @@ Salon.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    placeName: {
+    placename: {
         type: DataTypes.STRING,
         allowNull: false
     },
