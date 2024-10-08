@@ -50,7 +50,7 @@ Staff.init(
       allowNull: true,
     },
     dateOfJoining: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     workHours: {

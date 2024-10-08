@@ -7,6 +7,7 @@ import { UserDashboard } from "./pages/user/UserDashboard";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { OwnerDashboard } from "./pages/owner/OwnerDashboard";
 import { CreateSalonPage } from "./pages/owner/CreateSalon";
+import CreateStaffPage from "./pages/owner/CreateStaff";
 function App() {
   return (
     <div className="App">
@@ -28,6 +29,12 @@ function App() {
             path="/owner-dashboard/create-salon"
             element={
               <ProtectedRoute role="Owner" component={CreateSalonPage} />
+            }
+          />
+          <Route
+            path="/owner-dashboard/salon/create-staff/:salonId"
+            element={
+              <ProtectedRoute role="Owner" component={CreateStaffPage} />
             }
           />
         </Routes>

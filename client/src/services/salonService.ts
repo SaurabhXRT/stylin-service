@@ -11,18 +11,18 @@ interface CreateSalonInput {
 
 
 interface CreateStaffInput {
-  name: string;
-  email: string;
-  contactNumber: string;
-  address?: string;
-  role: string;
-  department?: string;
-  jobTitle: string;
-  expertise?: string;
-  workHours?: string;
-  shift?: string;
-  profileImage?: string;
-  status: string;
+  name: string;               
+  email: string;            
+  contactNumber: string;      
+  address: string;           
+  role: string;             
+  department: string;       
+  jobTitle: string;       
+  expertise: string;          
+  dateOfJoining: string;      
+  workHours: string;        
+  shift: string;             
+  salonId: string;          
 }
 
 export const getOwnerSalons = async () => {
@@ -63,5 +63,6 @@ export const createStaff = async (input: CreateStaffInput) => {
     mutation: CREATE_STAFF,
     variables: input,
   });
+  console.log(response);
   return response.data.createStaff;
 };

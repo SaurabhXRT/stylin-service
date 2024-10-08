@@ -20,15 +20,14 @@ export class SalonService {
     }
   }
 
-  async getAllSalons(){
-    try{
+  async getAllSalons() {
+    try {
       const salons = await Salon.findAll();
-      const salondata = salons.map(salon => salon.toJSON());
+      const salondata = salons.map((salon) => salon.toJSON());
       return salondata;
-
-    }catch(error){
+    } catch (error) {
       logger.log(error);
-      throw new Error("error getting all salons")
+      throw new Error("error getting all salons");
     }
   }
 
@@ -39,7 +38,7 @@ export class SalonService {
           ownerId: ownerId,
         },
       });
-      const salondata = salon.map(salon => salon.toJSON());
+      const salondata = salon.map((salon) => salon.toJSON());
       return salondata;
     } catch (error) {
       logger.log(error);
@@ -47,51 +46,46 @@ export class SalonService {
     }
   }
 
-  async getSalonIdByOwnerId(ownerId: string) {
-    try {
-      const salon = await this.getsalonbyOwnerId(ownerId);
-      if (!salon) {
-        throw new Error("Salon not found for the provided ownerId");
-      }
-      return salon.id;
-    } catch (error) {
-      logger.log(error);
-      throw new Error("Error fetching salonId by ownerId");
-    }
-  }
-
   async createStaff(staffData: any) {
     try {
+      const userexist = await Staff.findOne({
+        where: {
+          name: staffData.name,
+        },
+      });
+      if (userexist) {
+        throw new Error("error name already exist");
+      }
       const password = this.generateRandomPassword();
+      console.log("new staff password", password);
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const staff = await Staff.create({
+      await Staff.create({
         ...staffData,
         password: hashedPassword,
-        dateOfJoining: new Date(),
       });
-
-      return {
-        staff: staff.toJSON(),
-        plainPassword: password,
+      const data = {
+        message: "staff created successfully",
       };
+
+      return data;
     } catch (error) {
       logger.log(error);
       throw new Error("Error creating staff");
     }
   }
 
-  async getSalonStaffs(salonId: any){
-    try{
-        const staff = await Staff.findAll({
-            where: {
-                salonId: salonId
-            }
-        });
-        return staff;
-    }catch(error){
-        logger.log(error);
-        throw new Error("error getting salonstaff");
+  async getSalonStaffs(salonId: any) {
+    try {
+      const staff = await Staff.findAll({
+        where: {
+          salonId: salonId,
+        },
+      });
+      return staff;
+    } catch (error) {
+      logger.log(error);
+      throw new Error("error getting salonstaff");
     }
   }
 }

@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const CREATE_SALON = gql`
   mutation createSalon(
@@ -28,15 +28,15 @@ export const CREATE_STAFF = gql`
     $name: String!
     $email: String!
     $contactNumber: String!
-    $address: String
+    $address: String!
     $role: String!
-    $department: String
+    $department: String!
     $jobTitle: String!
-    $expertise: String
-    $workHours: String
-    $shift: String
-    $profileImage: String
-    $status: String
+    $expertise: String!
+    $dateOfJoining: String!
+    $workHours: String!
+    $shift: String!
+    $salonId: ID!
   ) {
     createStaff(
       name: $name
@@ -47,25 +47,12 @@ export const CREATE_STAFF = gql`
       department: $department
       jobTitle: $jobTitle
       expertise: $expertise
+      dateOfJoining: $dateOfJoining
       workHours: $workHours
       shift: $shift
-      profileImage: $profileImage
-      status: $status
+      salonId: $salonId
     ) {
-      id
-      name
-      email
-      contactNumber
-      address
-      role
-      department
-      jobTitle
-      expertise
-      workHours
-      shift
-      profileImage
-      status
-      salonId
+      message
     }
   }
 `;

@@ -10,8 +10,6 @@ export const createStaffController = async (_: any, payload: any, context: any) 
         if(!ownerId){
             throw new Error("you are not authorized to create staff");
         }
-        const salonId = await salonstaffservice.getSalonIdByOwnerId(ownerId);
-
         const staffData = {
             name: payload.name,
             email: payload.email,
@@ -21,13 +19,12 @@ export const createStaffController = async (_: any, payload: any, context: any) 
             department: payload.department,
             jobTitle: payload.jobTitle,
             expertise: payload.expertise,
+            dateOfJoining: payload. dateOfJoining,
             workHours: payload.workHours,
             shift: payload.shift,
-            profileImage: payload.profileImage,
-            status: payload.status,
-            salonId: salonId, 
+            salonId: payload.salonId, 
         };
-
+       
         const response = await salonstaffservice.createStaff(staffData);
         return response;
     } catch (error) {

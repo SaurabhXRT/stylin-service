@@ -13,25 +13,26 @@ export const typeDefs = gql`
     name: String!
     email: String!
     contactNumber: String!
-    address: String
+    address: String!
     role: String!
-    department: String
+    department: String!
     jobTitle: String!
-    expertise: String
+    expertise: String!
     dateOfJoining: String!
-    workHours: String
-    shift: String
-    profileImage: String
-    status: String
+    workHours: String!
+    shift: String!
+    profileImage: String!
+    status: String!
     salonId: ID!
   }
-
   type Query {
     getOwnerSalons: [Salon!]
     getSalonStaffs(salonId: ID!): [Staff!]
     getAllSalons: [Salon!]
   }
-
+  type Return {
+    message: String!
+  }
   type Mutation {
     createSalon(
       name: String!
@@ -43,15 +44,15 @@ export const typeDefs = gql`
       name: String!
       email: String!
       contactNumber: String!
-      address: String
+      address: String!
       role: String!
-      department: String
+      department: String!
       jobTitle: String!
-      expertise: String
-      workHours: String
-      shift: String
-      profileImage: String
-      status: String
-    ): Staff
+      expertise: String!
+      dateOfJoining: String!
+      workHours: String!
+      shift: String!
+      salonId: ID!
+    ): Return!
   }
 `;
