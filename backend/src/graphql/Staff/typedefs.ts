@@ -14,7 +14,7 @@ export const typeDefs = gql`
     dateOfJoining: String!
     workHours: String
     shift: String
-    profileImage: String
+    profileImage: String!
     status: String
     salonId: ID!
   }

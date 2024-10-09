@@ -10,6 +10,7 @@ import { Salon } from "./Salon/Salon.js";
 import { Service } from "./Service/StaffService.js";
 import { Feedback } from "./UserFeedback/UserFeedback.js";
 import { CityDetail } from "./Cities/cities.js";
+import { LeaveApplication } from "./Application/LeaveApplication.js";
 
 export async function initDatabase(db: Database, dbOptions: DbOptions) {
   await db.initInstance(dbOptions);
@@ -99,6 +100,18 @@ export async function initDatabase(db: Database, dbOptions: DbOptions) {
     as: "staffservices",
   });
   Service.belongsTo(Staff, {
+    foreignKey: "staffId",
+    as: "staff",
+  });
+
+  await LeaveApplication.sync({force:true});
+  logger.log("leaveapplication initiated successfully");
+
+  Staff.hasMany(LeaveApplication, {
+    foreignKey: "staffId",
+    as: "leaveapplication",
+  });
+  LeaveApplication.belongsTo(Staff, {
     foreignKey: "staffId",
     as: "staff",
   });

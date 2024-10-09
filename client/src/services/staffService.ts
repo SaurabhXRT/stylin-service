@@ -13,9 +13,9 @@ import {
   RECORD_STAFF_SERVICE,
 } from "../graphql/staff/mutations";
 
-interface UploadStaffImageInput {
-  profileImage: File;
-}
+// interface UploadStaffImageInput {
+//   profileImage: File;
+// }
 
 interface FeedbackInput {
   staffId: string;
@@ -81,11 +81,11 @@ export const recordStaffService = async (staffId: string) => {
   return response.data.recordStaffService;
 };
 
-export const uploadStaffImage = async (input: UploadStaffImageInput) => {
-  console.log("file her is",input);
+export const uploadStaffImage = async (input: File) => {
+  console.log("file her is", input);
   const response = await client.mutate({
     mutation: UPLOAD_STAFF_IMAGE,
-    variables: input,
+    variables: { profileImage: input },
   });
   return response.data.uploadStaffImage;
 };

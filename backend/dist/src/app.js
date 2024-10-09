@@ -155,7 +155,7 @@ var startgql = /*#__PURE__*/ function() {
                     ];
                 case 1:
                     initializegraphql = _state.sent();
-                    server.use("/graphql", graphqlUploadExpress(), expressMiddleware(initializegraphql, {
+                    server.use("/graphql", expressMiddleware(initializegraphql, {
                         context: /*#__PURE__*/ function() {
                             var _ref = _async_to_generator(function(param) {
                                 var req, context;

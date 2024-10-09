@@ -12,6 +12,7 @@ import { StaffTableOwner } from "./pages/owner/StaffTablePage";
 import { StaffTable } from "./pages/user/StaffTable";
 import { StaffServicePage } from "./pages/user/StaffServicePage";
 import { StaffDashboardPage } from "./pages/staff/StaffDashboard";
+import { LeavePage } from "./pages/staff/LeavePage";
 function App() {
   return (
     <div className="App">
@@ -29,9 +30,15 @@ function App() {
             path="/owner-dashboard"
             element={<ProtectedRoute role="Owner" component={OwnerDashboard} />}
           />
-           <Route
+          <Route
             path="/staff-dashboard"
-            element={<ProtectedRoute role="Staff" component={StaffDashboardPage} />}
+            element={
+              <ProtectedRoute role="Staff" component={StaffDashboardPage} />
+            }
+          />
+          <Route
+            path="/leave-page"
+            element={<ProtectedRoute role="Staff" component={LeavePage} />}
           />
           <Route
             path="/owner-dashboard/create-salon"
@@ -57,7 +64,9 @@ function App() {
           />
           <Route
             path="/user-dashboard/salon/staff/:staffId"
-            element={<ProtectedRoute role="User" component={StaffServicePage} />}
+            element={
+              <ProtectedRoute role="User" component={StaffServicePage} />
+            }
           />
         </Routes>
       </Router>

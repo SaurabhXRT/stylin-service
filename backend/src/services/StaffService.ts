@@ -77,18 +77,30 @@ export class Staffservice {
         }
       );
 
-      staff.profileImage = result.secure_url;
-      await staff.save();
+      console.log("Upload successful. Secure URL:", result.secure_url);
 
-      return staff;
+      const [updatedCount] = await Staff.update(
+          { profileImage: result.secure_url },
+          { where: { id: staffId } }
+      );
+
+      if (updatedCount === 0) {
+          console.log("No staff member updated.");
+          throw new Error("Failed to update staff member.");
+      }
+
+      const updatedStaff = await Staff.findByPk(staffId);
+      console.log("Updated Staff Member after save:", updatedStaff.toJSON());
+
+      return updatedStaff.toJSON();
     } catch (error) {
       logger.log(error);
       throw new Error("Error uploading image");
     }
   }
 
-  async recordStaffService(staffId: string, userId: string){
-    try{
+  async recordStaffService(staffId: string, userId: string) {
+    try {
       await Service.create({
         staffId,
         userId,
@@ -98,14 +110,13 @@ export class Staffservice {
         message: "staff service added successfully",
       };
       return data;
-    }catch(error){
+    } catch (error) {
       logger.log(error);
       throw new Error("error in recording staff service");
     }
   }
 
-
-  async getStaffClientService(staffId: string, period:any){
+  async getStaffClientService(staffId: string, period: any) {
     try {
       const where = {
         staffId,
@@ -114,49 +125,48 @@ export class Staffservice {
       const today = new Date();
       if (period === "daily") {
         where.dateOfService = {
-          [Op.gte]: new Date(today.setHours(0, 0, 0, 0)), 
+          [Op.gte]: new Date(today.setHours(0, 0, 0, 0)),
         };
       } else if (period === "monthly") {
         where.dateOfService = {
-          [Op.gte]: new Date(today.getFullYear(), today.getMonth(), 1), 
+          [Op.gte]: new Date(today.getFullYear(), today.getMonth(), 1),
         };
       }
 
       const count = await Service.count({ where });
       return count;
-
-    }catch(error){
+    } catch (error) {
       logger.log(error);
       throw new Error("error getting staff client service");
     }
   }
 
-  async getSalonOfStaffService(staffId: string){
-    try{
+  async getSalonOfStaffService(staffId: string) {
+    try {
       const staffWithSalon = await Staff.findOne({
         where: { id: staffId },
         include: [
           {
             model: Salon,
-            as: 'salon', 
+            as: "salon",
             include: [
               {
                 model: User,
-                as: 'owner',
-                attributes: ['id', 'name', 'email'],
+                as: "owner",
+                attributes: ["id", "name", "email"],
               },
-            ], 
+            ],
           },
         ],
       });
-  
+
       if (!staffWithSalon) {
         throw new Error(`Staff with ID ${staffId} not found`);
       }
       const data = staffWithSalon.toJSON();
-      logger.log(data)
-      return data.salon; 
-    }catch(error){
+      logger.log(data);
+      return data.salon;
+    } catch (error) {
       logger.log(error);
       throw new Error("error getting salon of staff");
     }

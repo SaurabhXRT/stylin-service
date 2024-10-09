@@ -12,7 +12,7 @@ import {
   createFeedbackController,
   getStaffFeedbackcontroller,
 } from "../../controllers/Staff/feedback.js";
-import { GraphQLUpload } from 'graphql-upload-ts';
+
 const queries = {
   getStaffProfile: (_: any, { staffId }: any, context: any) =>
     getStaffProfileController(_, { staffId }, context),
@@ -35,4 +35,4 @@ const mutations = {
   recordStaffService: (_: any, { staffId }: any, context: any) =>
     recordStaffServiceController(_, { staffId }, context),
 };
-export const resolvers = {Upload: GraphQLUpload, mutations, queries };
+export const resolvers = { mutations, queries };

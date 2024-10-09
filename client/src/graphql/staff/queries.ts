@@ -12,6 +12,7 @@ export const GET_STAFF_PROFILE = gql`
       role
       expertise
       department
+      profileImage
     }
   }
 `;
@@ -29,6 +30,7 @@ export const GET_STAFF_OWN_PROFILE = gql`
       role
       expertise
       department
+      profileImage
     }
   }
 `;

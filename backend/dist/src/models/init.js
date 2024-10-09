@@ -133,6 +133,7 @@ import { Salon } from "./Salon/Salon.js";
 import { Service } from "./Service/StaffService.js";
 import { Feedback } from "./UserFeedback/UserFeedback.js";
 import { CityDetail } from "./Cities/cities.js";
+import { LeaveApplication } from "./Application/LeaveApplication.js";
 export function initDatabase(db, dbOptions) {
     return _initDatabase.apply(this, arguments);
 }
@@ -264,6 +265,23 @@ function _initDatabase() {
                         as: "staffservices"
                     });
                     Service.belongsTo(Staff, {
+                        foreignKey: "staffId",
+                        as: "staff"
+                    });
+                    return [
+                        4,
+                        LeaveApplication.sync({
+                            force: true
+                        })
+                    ];
+                case 10:
+                    _state.sent();
+                    logger.log("leaveapplication initiated successfully");
+                    Staff.hasMany(LeaveApplication, {
+                        foreignKey: "staffId",
+                        as: "leaveapplication"
+                    });
+                    LeaveApplication.belongsTo(Staff, {
                         foreignKey: "staffId",
                         as: "staff"
                     });

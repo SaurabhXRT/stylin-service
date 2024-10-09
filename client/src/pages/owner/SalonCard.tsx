@@ -47,7 +47,7 @@ const SalonCard: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-center mb-8">Your Salons</h1>
+      <h1 className="text-2xl font-bold  mb-8">Your Salons</h1>
       <Button onClick={handleCreateSalonClick} className="mb-4">
         Create New Salon
       </Button>

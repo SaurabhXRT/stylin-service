@@ -1,10 +1,13 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs"; 
 import { setContext } from "@apollo/client/link/context";
 import { NormalizedCacheObject } from "@apollo/client";
 import { store } from "../redux/store";
-const httpLink = createHttpLink({
+
+const uploadLink = createUploadLink({
   uri: "http://127.0.0.1:5000/graphql",
 });
+
 
 const authLink = setContext((_, { headers }) => {
   const token = store.getState().auth.token;
@@ -12,12 +15,13 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? token : "",
+      authorization: token ? token: "",
     },
   };
 });
 
+
 export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authLink.concat(uploadLink),
   cache: new InMemoryCache(),
 });

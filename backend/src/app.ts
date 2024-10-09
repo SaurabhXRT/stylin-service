@@ -23,7 +23,7 @@ server.use(graphqlUploadExpress());
 const startgql = async () => {
   const initializegraphql = await createApolloGraphqlServer();
   server.use(
-    "/graphql",graphqlUploadExpress(),
+    "/graphql",
     expressMiddleware(initializegraphql, {
       context: async ({ req }): Promise<Context> => {
         await AuthMiddleware.verifyToken(req);
