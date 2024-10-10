@@ -134,6 +134,8 @@ import { Service } from "./Service/StaffService.js";
 import { Feedback } from "./UserFeedback/UserFeedback.js";
 import { CityDetail } from "./Cities/cities.js";
 import { LeaveApplication } from "./Application/LeaveApplication.js";
+import { Attendance } from "./Attendence/Attendence.js";
+import { AttendanceTimings } from "./Attendence/AttendenceTimings.js";
 export function initDatabase(db, dbOptions) {
     return _initDatabase.apply(this, arguments);
 }
@@ -270,9 +272,7 @@ function _initDatabase() {
                     });
                     return [
                         4,
-                        LeaveApplication.sync({
-                            force: true
-                        })
+                        LeaveApplication.sync()
                     ];
                 case 10:
                     _state.sent();
@@ -284,6 +284,36 @@ function _initDatabase() {
                     LeaveApplication.belongsTo(Staff, {
                         foreignKey: "staffId",
                         as: "staff"
+                    });
+                    return [
+                        4,
+                        Attendance.sync()
+                    ];
+                case 11:
+                    _state.sent();
+                    logger.log("attendence model initiated succesfulyy");
+                    return [
+                        4,
+                        AttendanceTimings.sync()
+                    ];
+                case 12:
+                    _state.sent();
+                    logger.log("attendece tiings model initiated succesfully ");
+                    Staff.hasMany(Attendance, {
+                        foreignKey: "staffId",
+                        as: "attendence"
+                    });
+                    Attendance.belongsTo(Staff, {
+                        foreignKey: "staffId",
+                        as: "staff"
+                    });
+                    Salon.hasOne(AttendanceTimings, {
+                        foreignKey: "salonId",
+                        as: "attendencetimings"
+                    });
+                    AttendanceTimings.belongsTo(Salon, {
+                        foreignKey: "salonId",
+                        as: "salon"
                     });
                     logger.log("all models initioiated successfully");
                     return [

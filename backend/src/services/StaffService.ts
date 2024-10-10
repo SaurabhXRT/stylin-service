@@ -164,7 +164,7 @@ export class Staffservice {
         throw new Error(`Staff with ID ${staffId} not found`);
       }
       const data = staffWithSalon.toJSON();
-      logger.log(data);
+      // logger.log(data);
       return data.salon;
     } catch (error) {
       logger.log(error);

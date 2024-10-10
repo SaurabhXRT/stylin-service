@@ -3,6 +3,7 @@ import { User } from "./User/index.js";
 import { Salon } from "./Salon/index.js";
 import { Staff } from "./Staff/index.js";
 import { City } from "./City/index.js";
+import { Attendence } from "./Attendence/index.js";
 import { Application } from "./Application/index.js";
 import { mergeTypeDefs } from "@graphql-tools/merge";
 import { Context } from "./types.js";
@@ -13,7 +14,8 @@ const mergedTypes = mergeTypeDefs([
   Salon.typeDefs,
   Staff.typeDefs,
   City.typeDefs,
-  Application.typeDefs
+  Application.typeDefs,
+  Attendence.typeDefs
 ]);
 async function createApolloGraphqlServer() {
   const gqlserver = new ApolloServer<Context>({
@@ -25,13 +27,15 @@ async function createApolloGraphqlServer() {
         ...Salon.resolvers.queries,
         ...Staff.resolvers.queries,
         ...City.resolvers.queries,
-        ...Application.resolvers.queries
+        ...Application.resolvers.queries,
+        ...Attendence.resolvers.queries
       },
       Mutation: {
         ...User.resolvers.mutations,
         ...Salon.resolvers.mutations,
         ...Staff.resolvers.mutations,
-        ...Application.resolvers.mutations
+        ...Application.resolvers.mutations,
+        ...Attendence.resolvers.mutations
       },
     },
     csrfPrevention: false,

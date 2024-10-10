@@ -37,6 +37,6 @@
       "src/**/*.json",
       ".env",
       "src/utils/validateinput.js"
-    ],
+, "src/utils/faceApiConfig.ts"    ],
     "exclude": ["node_modules", "src/http", "src/logs"]
   }

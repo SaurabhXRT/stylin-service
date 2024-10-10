@@ -133,6 +133,7 @@ import { UserMiddleware } from "./middlewares/actors/auth.user.js";
 import { StaffMiddleware } from "./middlewares/actors/auth.staff.js";
 import { OwnerMiddleware } from "./middlewares/actors/auth.owner.js";
 import { graphqlUploadExpress } from 'graphql-upload-ts';
+import { loadFaceApiModels } from "./utils/faceApiConfig.js";
 var server = express();
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({
@@ -151,9 +152,15 @@ var startgql = /*#__PURE__*/ function() {
                 case 0:
                     return [
                         4,
-                        createApolloGraphqlServer()
+                        loadFaceApiModels()
                     ];
                 case 1:
+                    _state.sent();
+                    return [
+                        4,
+                        createApolloGraphqlServer()
+                    ];
+                case 2:
                     initializegraphql = _state.sent();
                     server.use("/graphql", expressMiddleware(initializegraphql, {
                         context: /*#__PURE__*/ function() {

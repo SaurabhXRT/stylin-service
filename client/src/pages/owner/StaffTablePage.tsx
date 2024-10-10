@@ -20,6 +20,7 @@ interface Staff {
   jobTitle: string;
   role: string;
   dateOfJoining: string;
+  status: string;
 }
 
 const StaffTableOwner: React.FC = () => {
@@ -73,6 +74,7 @@ const StaffTableOwner: React.FC = () => {
               <TableHead>Contact Number</TableHead>
               <TableHead>Job Title</TableHead>
               <TableHead>role</TableHead>
+              <TableHead>status</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -84,6 +86,7 @@ const StaffTableOwner: React.FC = () => {
                 <TableCell>{staff.contactNumber}</TableCell>
                 <TableCell>{staff.jobTitle}</TableCell>
                 <TableCell>{staff.role}</TableCell>
+                <TableCell>{staff.status}</TableCell>
                 <TableCell className="text-right">
                   <Button
                     onClick={() => handleViewStaff(staff.id)}

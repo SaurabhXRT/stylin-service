@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { checkTodaysAttendance } from "../../services/AttendenceService";
 interface StaffProfile {
   id: string;
   name: string;
@@ -47,6 +48,8 @@ const StaffDashboardPage = () => {
   const [salon, setSalon] = useState<Salon | null>(null);
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const [attendanceExists, setAttendanceExists] = useState(false);
+
   const navigate = useNavigate();
   const fetchData = async () => {
     try {
@@ -60,6 +63,12 @@ const StaffDashboardPage = () => {
     }
   };
   useEffect(() => {
+    const checkAttendance = async () => {
+      const exists = await checkTodaysAttendance();
+      console.log(exists);
+      setAttendanceExists(exists);
+    };
+    checkAttendance();
     fetchData();
   }, []);
 
@@ -128,18 +137,18 @@ const StaffDashboardPage = () => {
             )}
           </CardContent>
           <CardHeader>
-          <CardTitle>Upload Profile Image</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Input type="file" accept="image/*" onChange={handleImage} />
-          <Button
-            className="mt-4"
-            onClick={handleImageUploads}
-            disabled={loading}
-          >
-            {loading ? "Uploading..." : "Upload"}
-          </Button>
-        </CardContent>
+            <CardTitle>Upload Profile Image</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Input type="file" accept="image/*" onChange={handleImage} />
+            <Button
+              className="mt-4"
+              onClick={handleImageUploads}
+              disabled={loading}
+            >
+              {loading ? "Uploading..." : "Upload"}
+            </Button>
+          </CardContent>
         </Card>
 
         <Card className="flex-1">
@@ -154,11 +163,24 @@ const StaffDashboardPage = () => {
                 <p>Owner Email: {salon.owner.email}</p>
               </>
             )}
-            <Button
-              className="mt-4"
-              onClick={() => navigate("/leave-page")}
-            >
+
+            <Button className="mt-4" onClick={() => navigate("/staff-dashboard/leave-page")}>
               Apply for Leave
+            </Button>
+            <Button
+              className={`mt-4 mx-5 ${
+                !attendanceExists
+                  ? "opacity-100"
+                  : "opacity-50 cursor-not-allowed"
+              }`}
+              onClick={() => {
+                if (!attendanceExists) {
+                  navigate("/staff-dashboard/attendance-page");
+                }
+              }}
+              disabled={attendanceExists}
+            >
+              Give Attendance
             </Button>
           </CardContent>
         </Card>

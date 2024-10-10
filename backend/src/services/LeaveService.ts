@@ -5,6 +5,14 @@ import { LeaveApplication } from "../models/Application/LeaveApplication.js";
 export class LeaveApplicationService {
   async applyForLeave(leavedata: any) {
     try {
+      const existingleave = await LeaveApplication.findOne({
+        where: {
+          staffId: leavedata.staffId,
+        },
+      });
+      if(existingleave){
+        throw new Error("aleady there is a leave existing of this staff");
+      }
       const leave = await LeaveApplication.create({
         ...leavedata,
       });
@@ -40,14 +48,40 @@ export class LeaveApplicationService {
           },
         }
       );
-
       if (updated) {
-        const updatedApplication = await LeaveApplication.findByPk(applicationId);
-        return updatedApplication.toJSON();
+        const updatedApplication = await LeaveApplication.findByPk(
+          applicationId
+        );
+        if (updatedApplication) {
+          const applicationData = updatedApplication.toJSON();
+          if (status === "Approved") {
+            await Staff.update(
+              { status: "On Leave" },
+              {
+                where: {
+                  id: applicationData.staffId,
+                },
+              }
+            );
+          } else if (status === "Rejected") {
+            await Staff.update(
+              { status: "Active" },
+              {
+                where: {
+                  id: applicationData.staffId,
+                },
+              }
+            );
+          }
+
+          return applicationData;
+        }
+      } else {
+        throw new Error("Leave application not found or not updated");
       }
     } catch (error) {
-      logger.log(error);
-      throw new Error("error updating application status");
+      console.error(error);
+      throw new Error("Error updating application status and staff status");
     }
   }
 
@@ -57,13 +91,16 @@ export class LeaveApplicationService {
         include: [
           {
             model: Staff,
-            as: "staff", 
-            attributes: ["id", "name", "email", "role", "contactNumber"], 
+            as: "staff",
+            attributes: ["id", "name", "email", "role", "contactNumber"],
           },
         ],
       });
-      
-      const leaveApplicationsData = leaveApplications.map((leaveApp) => leaveApp.toJSON());
+
+      const leaveApplicationsData = leaveApplications.map((leaveApp) =>
+        leaveApp.toJSON()
+      );
+      console.log(leaveApplicationsData);
       return leaveApplicationsData;
     } catch (error) {
       logger.log(error);

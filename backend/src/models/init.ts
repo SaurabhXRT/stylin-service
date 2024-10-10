@@ -11,6 +11,8 @@ import { Service } from "./Service/StaffService.js";
 import { Feedback } from "./UserFeedback/UserFeedback.js";
 import { CityDetail } from "./Cities/cities.js";
 import { LeaveApplication } from "./Application/LeaveApplication.js";
+import { Attendance } from "./Attendence/Attendence.js";
+import { AttendanceTimings } from "./Attendence/AttendenceTimings.js";
 
 export async function initDatabase(db: Database, dbOptions: DbOptions) {
   await db.initInstance(dbOptions);
@@ -104,7 +106,7 @@ export async function initDatabase(db: Database, dbOptions: DbOptions) {
     as: "staff",
   });
 
-  await LeaveApplication.sync({force:true});
+  await LeaveApplication.sync();
   logger.log("leaveapplication initiated successfully");
 
   Staff.hasMany(LeaveApplication, {
@@ -114,6 +116,29 @@ export async function initDatabase(db: Database, dbOptions: DbOptions) {
   LeaveApplication.belongsTo(Staff, {
     foreignKey: "staffId",
     as: "staff",
+  });
+  await Attendance.sync();
+  logger.log("attendence model initiated succesfulyy");
+  await AttendanceTimings.sync();
+  logger.log("attendece tiings model initiated succesfully ");
+  Staff.hasMany(Attendance, {
+    foreignKey: "staffId",
+    as: "attendence",
+  });
+
+  Attendance.belongsTo(Staff, {
+    foreignKey: "staffId",
+    as: "staff",
+  });
+
+  Salon.hasOne(AttendanceTimings, {
+    foreignKey: "salonId",
+    as: "attendencetimings",
+  });
+
+  AttendanceTimings.belongsTo(Salon, {
+    foreignKey: "salonId",
+    as: "salon",
   });
 
   logger.log("all models initioiated successfully");

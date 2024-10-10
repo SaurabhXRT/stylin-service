@@ -41,6 +41,10 @@ const SalonCard: React.FC = () => {
     navigate(`/owner-dashboard/salon/${salonId}`);
   };
 
+  const handleCreateAttendanceTimingsClick = (salonId: string) => {
+    navigate(`/owner-dashboard/salon/create-attendance-timings/${salonId}`);
+  };
+
   if (loading) {
     return <p>Loading salons...</p>;
   }
@@ -75,6 +79,12 @@ const SalonCard: React.FC = () => {
                 className="mt-2 mx-2"
               >
                 View All Staffs
+              </Button>
+              <Button
+                onClick={() => handleCreateAttendanceTimingsClick(salon.id)}
+                className="mt-2"
+              >
+                Create or Update Attendance Timings
               </Button>
             </Card>
           ))}

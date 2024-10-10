@@ -10,6 +10,7 @@ import { StaffMiddleware } from "./middlewares/actors/auth.staff.js";
 import { OwnerMiddleware } from "./middlewares/actors/auth.owner.js";
 import { Context } from "./graphql/types.js";
 import { graphqlUploadExpress } from 'graphql-upload-ts';
+import { loadFaceApiModels } from "./utils/faceApiConfig.js";
 const server: Express = express();
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
@@ -21,6 +22,7 @@ server.use(
 );
 server.use(graphqlUploadExpress());
 const startgql = async () => {
+  await loadFaceApiModels();
   const initializegraphql = await createApolloGraphqlServer();
   server.use(
     "/graphql",

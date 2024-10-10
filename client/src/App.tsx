@@ -13,6 +13,9 @@ import { StaffTable } from "./pages/user/StaffTable";
 import { StaffServicePage } from "./pages/user/StaffServicePage";
 import { StaffDashboardPage } from "./pages/staff/StaffDashboard";
 import { LeavePage } from "./pages/staff/LeavePage";
+import { CreateAttendanceTimings } from "./pages/owner/CreateAttendence";
+import { LeaveApplicationTable } from "./pages/owner/LeaveApplicationTable";
+import { AttendancePage } from "./pages/staff/AttendencePage";
 function App() {
   return (
     <div className="App">
@@ -37,8 +40,12 @@ function App() {
             }
           />
           <Route
-            path="/leave-page"
+            path="/staff-dashboard/leave-page"
             element={<ProtectedRoute role="Staff" component={LeavePage} />}
+          />
+            <Route
+            path="/staff-dashboard/attendance-page"
+            element={<ProtectedRoute role="Staff" component={ AttendancePage} />}
           />
           <Route
             path="/owner-dashboard/create-salon"
@@ -56,6 +63,21 @@ function App() {
             path="/owner-dashboard/salon/:salonId"
             element={
               <ProtectedRoute role="Owner" component={StaffTableOwner} />
+            }
+          />
+          <Route
+            path="/owner-dashboard/salon/create-attendance-timings/:salonId"
+            element={
+              <ProtectedRoute
+                role="Owner"
+                component={CreateAttendanceTimings}
+              />
+            }
+          />
+          <Route
+            path="/owner-dashboard/leave-application"
+            element={
+              <ProtectedRoute role="Owner" component={LeaveApplicationTable} />
             }
           />
           <Route
