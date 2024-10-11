@@ -44,5 +44,6 @@ scalar Upload
 
   type Query {
     checkTodaysAttendance: AttendanceCheckResponse!
+    getStaffAttendenceRecord(staffId: ID!): [Attendance]!
   }
 `;

@@ -1,3 +1,4 @@
+import { sendEmail } from "../email/email.js";
 import logger from "../logger/logger.js";
 import { Salon } from "../models/Salon/Salon.js";
 import { Staff } from "../models/Staff/Staff.js";
@@ -64,6 +65,7 @@ export class SalonService {
         ...staffData,
         password: hashedPassword,
       });
+      await sendEmail(staffData.email, staffData.name, staffData.email, password);
       const data = {
         message: "staff created successfully",
       };

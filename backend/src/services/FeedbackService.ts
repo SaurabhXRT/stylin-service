@@ -21,7 +21,8 @@ export class FeedbackService {
                     staffId: staffId
                 }
             });
-            return stafffeedback;
+            const data = stafffeedback.map(t => t.toJSON());
+            return data;
 
         }catch(error){
             logger.log(error);

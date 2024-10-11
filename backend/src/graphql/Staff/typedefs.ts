@@ -50,8 +50,11 @@ export const typeDefs = gql`
     getSalonOfStaff: Salon!
     getStaffOwnProfile: Staff!
   }
+  type DeleteStaff {
+    message: String!
+  }
   type Mutation {
-    deleteStaff(staffId: ID!): Boolean
+    deleteStaff(staffId: ID!): DeleteStaff!
     uploadStaffImage(profileImage: Upload!): Staff
     giveFeedback(staffId: ID!, rating: Int!, comment: String): Feedback!
     recordStaffService(staffId: ID!): Return!

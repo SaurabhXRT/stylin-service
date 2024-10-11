@@ -107,4 +107,19 @@ export class AttendenceService {
 
     return { success: true, message: "Attendance recorded successfully." };
   }
+
+  async getAttendenceRecordOfStaff(staffId: string){
+    try{
+      const attendence = await Attendance.findAll({
+        where: {
+          staffId: staffId,
+        }
+      });
+      const data =  attendence.map(t => t.toJSON());
+      return data;
+
+    }catch(error){
+      logger.log(error);
+    }
+  }
 }

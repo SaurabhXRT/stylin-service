@@ -164,7 +164,10 @@ const StaffDashboardPage = () => {
               </>
             )}
 
-            <Button className="mt-4" onClick={() => navigate("/staff-dashboard/leave-page")}>
+            <Button
+              className="mt-4"
+              onClick={() => navigate("/staff-dashboard/leave-page")}
+            >
               Apply for Leave
             </Button>
             <Button
@@ -182,6 +185,16 @@ const StaffDashboardPage = () => {
             >
               Give Attendance
             </Button>
+            {staffProfile.role == "Manager" && (
+              <Button
+                onClick={() =>
+                  navigate(`/staff-dashboard/salon/${salon.id}/staffs`)
+                }
+                className="mt-2 mx-2"
+              >
+                View All Staffs
+              </Button>
+            )}
           </CardContent>
         </Card>
       </div>

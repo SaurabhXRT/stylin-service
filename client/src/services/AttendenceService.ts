@@ -3,7 +3,10 @@ import {
   CREATE_ATTENDENCE_TIMINGS,
   RECORD_ATTENDENCE,
 } from "../graphql/Attendence/mutations";
-import { CHECK_TODAYS_ATTENDANCE } from "../graphql/Attendence/queries";
+import {
+  CHECK_TODAYS_ATTENDANCE,
+  GET_STAFF_ATTENDENCE_RECORD,
+} from "../graphql/Attendence/queries";
 interface AttendanceTimings {
   salonId: string;
   startTime: string;
@@ -40,4 +43,12 @@ export const recordStaffAttendence = async (input: AttendanceInput) => {
     variables: input,
   });
   return response.data.recordAttendance;
+};
+
+export const getStaffAttendenceRecord = async (staffId: string) => {
+  const response = await client.query({
+    query: GET_STAFF_ATTENDENCE_RECORD,
+    variables: { staffId },
+  });
+  return response.data.getStaffAttendenceRecord;
 };

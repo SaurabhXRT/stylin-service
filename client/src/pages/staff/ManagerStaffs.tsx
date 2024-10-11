@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSalonStaffs } from "../../services/salonService";
-import { deleteStaff } from "../../services/staffService";
 import { useNavigate } from "react-router-dom";
 import {
   Table,
@@ -13,18 +12,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import toast from "react-hot-toast";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 
 interface Staff {
   id: string;
@@ -37,11 +24,10 @@ interface Staff {
   status: string;
 }
 
-const StaffTableOwner: React.FC = () => {
+const StaffTableManager: React.FC = () => {
   const { salonId } = useParams<{ salonId: string }>();
   const [staffs, setStaffs] = useState<Staff[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [selectedStaff, setSelectedStaff] = useState<string | null>(null);
   const navigate = useNavigate();
   const fetchStaffs = async () => {
     try {
@@ -61,17 +47,8 @@ const StaffTableOwner: React.FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [salonId]);
 
-  const handleDeleteStaff = async (staffId: string) => {
-    const response = await deleteStaff(staffId);
-    if (response) {
-      toast.success(response.message);
-    }
-    await fetchStaffs();
-    console.log(`Deleting staff with id: ${staffId}`);
-  };
-
   const handleViewStaff = (staffId: string) => {
-    navigate(`/owner-dashboard/staff/${staffId}`);
+    navigate(`/staff-dashboard/staff/${staffId}`);
     console.log(`Viewing staff with id: ${staffId}`);
   };
 
@@ -112,39 +89,6 @@ const StaffTableOwner: React.FC = () => {
                   >
                     View
                   </Button>
-
-                  {/* AlertDialog for Delete Confirmation */}
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="destructive"
-                        onClick={() => setSelectedStaff(staff.id)}
-                      >
-                        Delete
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Are you absolutely sure?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. This will permanently
-                          delete the staff.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => {
-                            if (selectedStaff) handleDeleteStaff(selectedStaff);
-                          }}
-                        >
-                          Delete
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
                 </TableCell>
               </TableRow>
             ))}
@@ -155,4 +99,4 @@ const StaffTableOwner: React.FC = () => {
   );
 };
 
-export { StaffTableOwner };
+export { StaffTableManager };

@@ -8,7 +8,7 @@ export const deleteStaffController = async (_:any, { staffId }:any, context:any)
     if (!ownerId) {
       throw new Error("Unauthorized to delete staff");
     }
-    const response = await staffservice.deleteStaff(ownerId, staffId);
+    const response = await staffservice.deleteStaff(staffId);
     return response;
   } catch (error) {
     logger.log(error);

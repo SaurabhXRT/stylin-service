@@ -4,10 +4,41 @@
   "description": "A salon staff management service",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "docker-compose up",
+    "build": "docker-compose build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "prettier": "prettier --write .",
+    "dev:backend": "cd backend && pnpm run dev",
+    "dev:client": "cd client && npm run dev"
   },
-  "keywords": [],
+  "keywords": [
+    "salon",
+    "management",
+    "staff",
+    "service"
+  ],
   "author": "Saurabh Kumar",
   "github": "https://github.com/SaurabhXRT",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SaurabhXRT/stylin-service.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SaurabhXRT/stylin-service/issues"
+  },
+  "homepage": "https://github.com/SaurabhXRT/stylin-task#readme",
+  "license": "ISC",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0",
+    "pnpm": ">=7.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.1",
+    "prettier": "^2.0.0"
+  }
 }

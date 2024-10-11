@@ -35,7 +35,7 @@ export const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2
    * @param maxRadius - The allowed radius (in kilometers)
    * @returns boolean indicating whether the distance is within the allowed radius
    */
-  export const isWithinRadius = (distance: number, maxRadius: number = 5): boolean => {
+  export const isWithinRadius = (distance: number, maxRadius: number = 50): boolean => {
     return distance <= maxRadius;
   };
   

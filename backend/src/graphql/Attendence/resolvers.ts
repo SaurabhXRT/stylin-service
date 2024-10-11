@@ -2,6 +2,7 @@ import {
   checkTodaysAttendanceController,
   createAttendenceTimingsController,
   recordAttendanceController,
+  getAttendenceRecordOfStaffController,
 } from "../../controllers/Attendence/attendence.js";
 
 const mutations = {
@@ -13,5 +14,7 @@ const mutations = {
 const queries = {
   checkTodaysAttendance: (_: any, __: any, context: any) =>
     checkTodaysAttendanceController(_, __, context),
+  getStaffAttendenceRecord: (_: any, { staffId }: any, context: any) =>
+    getAttendenceRecordOfStaffController(_, { staffId }, context),
 };
 export const resolvers = { mutations, queries };

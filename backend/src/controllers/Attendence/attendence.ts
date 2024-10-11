@@ -56,3 +56,18 @@ export const recordAttendanceController = async ( _: any, payload: any, context:
     throw new Error("error in creating attendence ");
   }
 };
+
+
+export const getAttendenceRecordOfStaffController = async(_:any,{staffId}: any, context:any) => {
+  try{
+    if(!context.owner){
+      throw new Error("unauthorized");
+    }
+    const response = await attendeceservice.getAttendenceRecordOfStaff(staffId);
+    return response;
+
+  }catch(error){
+    logger.log(error);
+    throw new Error("error getting attendence record");
+  }
+}

@@ -16,6 +16,9 @@ import { LeavePage } from "./pages/staff/LeavePage";
 import { CreateAttendanceTimings } from "./pages/owner/CreateAttendence";
 import { LeaveApplicationTable } from "./pages/owner/LeaveApplicationTable";
 import { AttendancePage } from "./pages/staff/AttendencePage";
+import { StaffDetails } from "./pages/owner/StaffDetails";
+import { StaffTableManager } from "./pages/staff/ManagerStaffs";
+import { ManagerStaffDetails } from "./pages/staff/ManagerStaffDetails";
 function App() {
   return (
     <div className="App">
@@ -43,9 +46,21 @@ function App() {
             path="/staff-dashboard/leave-page"
             element={<ProtectedRoute role="Staff" component={LeavePage} />}
           />
-            <Route
+          <Route
+            path="/staff-dashboard/salon/:salonId/staffs"
+            element={
+              <ProtectedRoute role="Staff" component={StaffTableManager} />
+            }
+          />
+          <Route
+            path="/staff-dashboard/staff/:staffId"
+            element={
+              <ProtectedRoute role="Staff" component={ManagerStaffDetails} />
+            }
+          />
+          <Route
             path="/staff-dashboard/attendance-page"
-            element={<ProtectedRoute role="Staff" component={ AttendancePage} />}
+            element={<ProtectedRoute role="Staff" component={AttendancePage} />}
           />
           <Route
             path="/owner-dashboard/create-salon"
@@ -73,6 +88,10 @@ function App() {
                 component={CreateAttendanceTimings}
               />
             }
+          />
+          <Route
+            path="/owner-dashboard/staff/:staffId"
+            element={<ProtectedRoute role="Owner" component={StaffDetails} />}
           />
           <Route
             path="/owner-dashboard/leave-application"

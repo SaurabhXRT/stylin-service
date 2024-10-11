@@ -66,6 +66,7 @@ export const getStaffFeedback = async (staffId: string) => {
 };
 
 export const deleteStaff = async (staffId: string) => {
+  console.log(staffId)
   const response = await client.mutate({
     mutation: DELETE_STAFF,
     variables: { staffId },

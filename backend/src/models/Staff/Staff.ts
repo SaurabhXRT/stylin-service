@@ -70,7 +70,7 @@ Staff.init(
     },
     profileImage: {
       type: DataTypes.STRING,
-      allowNull: true,
+      defaultValue: "https://res.cloudinary.com/dar4ws6v6/image/upload/v1728595252/staff_images/hwtolcjjbxk4zlsevfnx.jpg"
     },
     status: {
       type: DataTypes.ENUM("Active", "Inactive", "On Leave"),

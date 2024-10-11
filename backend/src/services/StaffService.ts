@@ -30,22 +30,18 @@ export class Staffservice {
     }
   }
 
-  async deleteStaff(ownerId: any, staffId: any) {
+  async deleteStaff(staffId: any) {
     try {
       const staff = await Staff.findOne({ where: { id: staffId } });
       if (!staff) {
         throw new Error("Staff member not found");
       }
-      const salon = await Salon.findOne({
-        where: { id: staff.salonId, ownerId: ownerId },
-      });
-
-      if (!salon) {
-        throw new Error("Not authorized to delete this staff");
-      }
-
+    
       await Staff.destroy({ where: { id: staffId } });
-      return "Staff member deleted successfully.";
+      const data = {
+        message: "Staff member deleted successfully."
+      }
+      return data;
     } catch (error) {
       logger.log(error);
       throw new Error("Error deleting staff");
